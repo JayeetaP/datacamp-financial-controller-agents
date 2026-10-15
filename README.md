@@ -3,7 +3,7 @@
 An eval-led, auditable monthly-close demonstration built for a DataCamp session. Every company,
 person, vendor, customer, document, and amount is synthetic.
 
-> Code owns the math. Evidence owns the facts. The model connects and explains. A human owns the
+> Deterministic code owns the math. Evidence owns the facts. The model connects and explains. A human owns the
 > decision.
 
 ## What the demo shows
