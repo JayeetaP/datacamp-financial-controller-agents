@@ -1,6 +1,7 @@
 # Architecture and workflow
 
-The demo is deliberately a small harness, not an unconstrained finance chatbot.
+The demo is deliberately a small harness, not an unconstrained finance chatbot. For the data
+sources and both case paths, see the [visual process design](process-design.md).
 
 ```mermaid
 flowchart LR
@@ -40,7 +41,9 @@ flowchart LR
 `CodexProvider` invokes `codex exec` as a subprocess. It uses the Codex desktop/CLI ChatGPT login,
 the project-scoped `.codex/config.toml`, a read-only sandbox, JSONL events, and a Pydantic-generated
 output schema. It does not read an API key. Replay mode uses the same `Finding` contract and all the
-same downstream governance gates.
+same downstream governance gates. The current bounded investigation procedure is embedded in
+`CodexProvider._prompt`; the finance playbooks in `domain_skills/` are reference material, not yet
+loaded directly by the live investigator.
 
 ## Repository map
 
@@ -51,8 +54,8 @@ same downstream governance gates.
 ├── controls/                canonical finance rules and evidence policy
 ├── data/canonical/          deterministic synthetic source package
 ├── demo_starter/            intentionally tiny red-test live-coding surface
-├── docs/                    architecture and presenter runbook
-├── domain_skills/           runtime SME playbooks used by the investigator
+├── docs/                    process design, AI development lifecycle, demo instructions
+├── domain_skills/           finance SME reference playbooks
 ├── evals/                   frozen cases and replayed provider outputs
 ├── knowledge/confluence/    synthetic policy, runbook and precedent corpus
 ├── schemas/                 exported JSON contracts

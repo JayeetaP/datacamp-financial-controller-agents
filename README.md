@@ -15,6 +15,19 @@ person, vendor, customer, document, and amount is synthetic.
 5. A second control that escalates recurring unmatched receipts before month-end.
 6. Traces, evals, SME feedback, timing, token usage, and versioned run records.
 
+```mermaid
+flowchart LR
+    D["Synthetic close data"] --> Q{"Quality ready?"}
+    Q -- "No" --> B["Block before investigation"]
+    Q -- "Yes" --> E["Detect exception or control trend"]
+    E --> I["Investigate or escalate"]
+    I --> G["Evidence and authority gates"]
+    G --> R["Human review and run record"]
+```
+
+The [process design](docs/process-design.md) traces both cases, their source records, and the
+decision at each stage.
+
 ## Quick start
 
 Requirements: Python 3.11+, `uv`, Git, and the Codex CLI signed in with ChatGPT for live mode.
@@ -46,8 +59,8 @@ environment after cloning.
 
 ### 1. Annual software renewal
 
-September software expense is USD 144,000 against a USD 12,000 budget. The investigator retrieves
-the prepaid policy and prior procedure, then uses the current contract to prove a twelve-month
+September software expense is USD 144,000 against a USD 12,000 budget. The investigator searches
+synthetic close guidance, then retrieves the current invoice and contract to prove a twelve-month
 service period. Deterministic code calculates USD 12,000 current expense and USD 132,000 prepaid,
 and prepares an unposted draft adjustment for controller review.
 
@@ -63,14 +76,15 @@ becomes a final-close failure without inventing a root cause.
 - `controls/`: executable policy inputs and evidence rules.
 - `data/canonical/`: generated synthetic finance records.
 - `knowledge/`: synthetic runbooks and prior investigations.
-- `domain_skills/`: runtime finance playbooks.
+- `domain_skills/`: finance SME playbooks; direct live-agent loading is planned.
 - `src/financial_controller/`: validation, finance engine, retrieval, agent, gates, reporting.
 - `evals/`: frozen behavioral cases and replay fixtures.
 - `.agents/skills/`: repo-local Codex development workflows.
 
-See [FINAL_BUILD_PLAN.md](FINAL_BUILD_PLAN.md) for the complete implementation contract.
-The executable flow and presenter commands are in [docs/architecture.md](docs/architecture.md) and
-[docs/demo-runbook.md](docs/demo-runbook.md).
+Start with [how we built it](docs/ai-dlc/README.md), the [build plan](docs/ai-dlc/build-plan.md),
+and the [visual process design](docs/process-design.md). For implementation details, see
+[architecture](docs/architecture.md); for commands, see [how to run the demo](docs/run-the-demo.md).
+The [visualization plan](docs/visualization-plan.md) describes the next read-only review screen.
 
 ## Safety boundary
 
