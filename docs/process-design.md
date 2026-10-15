@@ -1,32 +1,49 @@
 # Process design: from close data to a review decision
 
-This page shows what happens in the running demo, where each input comes from, and what a
-controller can inspect at each stage. Everything is synthetic. The diagrams are Mermaid blocks
-and render directly in GitHub Markdown.
+This page starts with the controller's questions, then reveals the system only as each question
+needs an answer. Everything is synthetic. The diagrams are Mermaid blocks that render in GitHub
+Markdown.
 
-## One-screen view
+## Start the discussion with these questions
+
+1. September shows USD 144,000 in software expense against a USD 12,000 budget. Is this a real
+   overspend, a timing issue, or bad data?
+2. What must pass before we let an agent investigate: file completeness, required columns,
+   relationships, and reconciliations? What happens when a check fails?
+3. If an older case suggests the answer, what would still count as proof for **this** September?
+4. If the current evidence supports a correction, what can code calculate and prepare—and what
+   must remain a controller's decision?
+5. What if there is no supported answer, or a different control is getting worse before close?
+6. How can we see what the agent used, how long it took, and whether the next version is better?
+
+The first four questions lead through the annual-software case. The fifth introduces the
+unmatched-receipt case: an early escalation, not a second AI-generated diagnosis. The last
+question connects both cases to run history, SME feedback, and eval-led improvement.
+
+## The flow in one view
 
 ```mermaid
 flowchart LR
-    P["1. Synthetic close package"] --> Q{"2. Data quality ready?"}
-    Q -- "No" --> B["Blocked quality result"]
-    Q -- "Yes" --> D["3. Deterministic exception"]
-    D --> C{"Which case?"}
-    C -- "Annual software bill" --> A["4. Codex investigates"]
-    C -- "Unmatched receipts" --> R["4. Preventive control"]
-    A --> G["5. Evidence and authority gates"]
-    R --> G
-    G --> O["6. Review output and run record"]
-    O --> F["7. SME feedback and evals"]
-    F --> D
+    SIGNAL["Close signal"] --> TRUST{"Can we trust the inputs?"}
+    TRUST -- "No" --> STOP["Stop and show failed checks"]
+    TRUST -- "Yes" --> CASE{"What kind of decision?"}
+    CASE -- "Annual software bill" --> PROOF["Find guidance, then current proof"]
+    PROOF --> MATH["Calculate and prepare unposted draft"]
+    MATH --> AUDIT["Check evidence, amount, and authority"]
+    AUDIT --> REVIEW["Controller reviews"]
+    CASE -- "Receipts getting older" --> RULE["Evaluate preventive thresholds"]
+    RULE --> ESC["Escalate to AR owner before close"]
+    REVIEW --> LEARN["Run history, SME feedback, evals"]
+    ESC --> LEARN
 ```
 
-The two cases share admission, policy, run storage for successful runs, and human authority. They
-differ at stage 4: the annual bill needs a bounded investigation; the receipt threshold is
-calculated directly. A blocked annual package creates a run record; blocked receipt admission
-currently raises an error without one. The [build plan](ai-dlc/build-plan.md) calls out that gap.
+Read this left to right as three decisions: **trust the data, establish the right evidence, then
+choose a safe action**. The annual bill needs a bounded Codex investigation; receipt aging uses a
+deterministic control rule, not an agent. Both leave the human decision open. A blocked annual
+package creates a run record; blocked receipt admission currently raises an error without one.
+The [build plan](ai-dlc/build-plan.md) calls out that gap.
 
-## Where the information comes from
+## 1. Map the evidence
 
 ```mermaid
 flowchart TB
@@ -67,7 +84,7 @@ No live ERP or Confluence account is connected. The local MCP server makes the s
 and evidence lookup visible through the same tool shape an external connector could later use.
 Search is metadata-filtered lexical ranking; it is not a semantic or hybrid search service today.
 
-## Data admission, up close
+## 2. Decide whether the data is usable
 
 ```mermaid
 flowchart TB
@@ -93,22 +110,7 @@ the latest unmatched-receipt view against bank receipts, and journal debit/credi
 synthetic package is deliberately narrow. [The build plan](ai-dlc/build-plan.md) includes deeper
 row-level contracts as a next step, not a claim about today's validator.
 
-## What happens at each stage
-
-| Stage | Owner | Work performed | Artifact to inspect |
-|---|---|---|---|
-| 1. Load | Generator and repository | Read the September 2026 package and its manifests | `data/canonical/` and `data/evidence_manifest.json` |
-| 2. Admit | `quality/validator.py` | Check files, columns, counts, hashes, account links, invoice/contract totals, receipt view, journal balance, and period | `financial-controller validate` output; `DATA-ADMISSION` gate in a run |
-| 3. Detect | `engine/variance.py` or `engine/preventive.py` | Calculate the material software variance or evaluate four receipt thresholds | Variance in the agent case payload; control result in `events.jsonl` |
-| 4. Investigate | `CodexProvider` and local finance MCP, for the annual case | Search guidance, fetch current evidence, call calculator and draft tool | MCP calls in `outputs/runs/<run-id>/events.jsonl` |
-| 5. Check | `gates/audit.py` and workflow runner | Resolve cited IDs, inspect claims, require current proof, preserve human authority, verify draft | `gate_results` in `run.json` |
-| 6. Review | Reporting and controller | Show finding, evidence map, route, and requested action; decision stays `PENDING` | `outputs/reports/<run-id>.md` or `.html` |
-| 7. Improve | Run ledger, SME, and eval suite | Record time, tools, tokens, result, feedback, then freeze a failure as an eval | `outputs/run_ledger.sqlite3`, `evals/cases.yaml` |
-
-The current HTML is a simple export. The [visualization plan](visualization-plan.md) defines the
-next review board and the extra typed artifacts it needs.
-
-## Case 1: solve the annual software bill
+## 3. Resolve the annual bill without posting
 
 The problem is legible from the source records: September software expense is USD 144,000 against
 a USD 12,000 budget. The USD 132,000 variance is calculated in code. The agent does not receive the
@@ -153,7 +155,7 @@ August 31, 2027. `POLICY-PREPAID-003` applies whole-month straight-line allocati
 USD 12,000 for September and USD 132,000 for future service. The result is `RESOLVED` and routed
 to `REVIEW`; the draft stays `UNPOSTED` and the human decision stays `PENDING`.
 
-## Case 2: intervene before close
+## 4. Escalate before close
 
 The second case shows a different pattern: a control rule notices deterioration before the final
 close, without asking a model to invent a cause.
@@ -172,7 +174,7 @@ calendar, and `POLICY-AR-007`. The rule is conjunctive: all four conditions must
 is `UNRESOLVED` with route `ESCALATE`, because the data shows a worsening control but does not prove
 why individual receipts remain unmatched.
 
-## Where the workflow stops
+## 5. Show the limits, not just the successes
 
 | Situation | System outcome | Reason |
 |---|---|---|
@@ -183,3 +185,18 @@ why individual receipts remain unmatched.
 
 The missing-contract case is currently a replay fixture, not a full altered-package live run. That
 is a specific next eval improvement in the [build plan](ai-dlc/build-plan.md).
+
+## Technical reference: what runs at each stage
+
+| Stage | Owner | Work performed | Artifact to inspect |
+|---|---|---|---|
+| 1. Load | Generator and repository | Read the September 2026 package and its manifests | `data/canonical/` and `data/evidence_manifest.json` |
+| 2. Admit | `quality/validator.py` | Check files, columns, counts, hashes, account links, invoice/contract totals, receipt view, journal balance, and period | `financial-controller validate` output; `DATA-ADMISSION` gate in a run |
+| 3. Detect | `engine/variance.py` or `engine/preventive.py` | Calculate the material software variance or evaluate four receipt thresholds | Variance in the agent case payload; control result in `events.jsonl` |
+| 4. Investigate | `CodexProvider` and local finance MCP, for the annual case | Search guidance, fetch current evidence, call calculator and draft tool | MCP calls in `outputs/runs/<run-id>/events.jsonl` |
+| 5. Check | `gates/audit.py` and workflow runner | Resolve cited IDs, inspect claims, require current proof, preserve human authority, verify draft | `gate_results` in `run.json` |
+| 6. Review | Reporting and controller | Show finding, evidence map, route, and requested action; decision stays `PENDING` | `outputs/reports/<run-id>.md` or `.html` |
+| 7. Improve | Run ledger, SME, and eval suite | Record time, tools, tokens, result, feedback, then freeze a failure as an eval | `outputs/run_ledger.sqlite3`, `evals/cases.yaml` |
+
+The current HTML is a simple export. The [visualization plan](visualization-plan.md) defines the
+next review board and the extra typed artifacts it needs.
