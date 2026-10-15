@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#14292b">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="A read-only, synthetic financial-close review for the DataCamp controller-agent demonstration.">
-  <title>Close Review | Synthetic Financial Controller</title>
+  <title>September Close Review | Cobalt Peak</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
 </head>
@@ -13,12 +13,12 @@
   <div class="app-shell">
     <header class="masthead">
       <div class="brand">
-        <span class="brand-symbol" aria-hidden="true">C<span class="brand-dot"></span></span>
-        <span class="brand-copy"><strong>COBALT PEAK</strong><small>FINANCIAL CLOSE LAB</small></span>
+        <span class="brand-symbol" aria-hidden="true">CP</span>
+        <span class="brand-copy"><strong>Cobalt Peak</strong><small>Finance · Close review</small></span>
       </div>
       <div class="masthead-actions">
-        <span class="synthetic-chip">SYNTHETIC DATA</span>
-        <span class="local-chip">LOCAL · READ ONLY</span>
+        <span class="synthetic-chip">Synthetic data</span>
+        <span class="local-chip">Local · Read only</span>
         <button id="refreshButton" class="refresh-button" type="button" aria-label="Refresh saved runs">↻ <span>Refresh</span></button>
       </div>
     </header>
@@ -31,26 +31,29 @@
     <main>
       <section class="hero" aria-labelledby="pageTitle">
         <div class="hero-copy">
-          <p class="eyebrow">SEPTEMBER 2026 CLOSE <span class="eyebrow-separator">/</span> CONTROLLER REVIEW</p>
-          <h1 id="pageTitle">From close signal<br>to defensible decision.</h1>
-          <p class="hero-intro">Variances, reconciliation breaks, and aging items are routine. The question is which are data problems, which have enough evidence to resolve, and which need escalation before close.</p>
+          <p class="eyebrow">Finance operations <span class="eyebrow-separator">/</span> September 2026</p>
+          <h1 id="pageTitle">September close review</h1>
+          <p class="hero-intro">Check source data, investigate the software expense variance, and review receipts that need attention before close.</p>
         </div>
         <div class="hero-status" aria-live="polite">
-          <span class="hero-status-label">CURRENT PACKAGE</span>
-          <strong id="heroQuality">Checking…</strong>
-          <span id="heroQualitySub">Validating the synthetic source package</span>
-          <span class="hero-status-rule" aria-hidden="true"></span>
-          <span class="hero-status-label">VIEWING</span>
-          <strong id="heroRun">Source preview</strong>
-          <span id="heroRunSub">No agent outcome is implied by source data</span>
+          <div class="hero-status-item">
+            <span class="hero-status-label">Source package</span>
+            <strong id="heroQuality">Checking…</strong>
+            <span id="heroQualitySub">Validating the synthetic source package</span>
+          </div>
+          <div class="hero-status-item">
+            <span class="hero-status-label">Selected run</span>
+            <strong id="heroRun">Source preview</strong>
+            <span id="heroRunSub">No agent outcome is implied by source data</span>
+          </div>
         </div>
       </section>
 
       <nav class="view-nav" aria-label="Review sections">
-        <button class="view-tab is-active" data-view="overview" type="button" aria-current="page"><span>01</span> Overview</button>
-        <button class="view-tab" data-view="annual" type="button"><span>02</span> Annual bill</button>
-        <button class="view-tab" data-view="receipts" type="button"><span>03</span> Aging receipts</button>
-        <button class="view-tab" data-view="runs" type="button"><span>04</span> Run evidence</button>
+        <button class="view-tab is-active" data-view="overview" type="button" aria-current="page">Overview</button>
+        <button class="view-tab" data-view="annual" type="button">Annual expense</button>
+        <button class="view-tab" data-view="receipts" type="button">Receipts control</button>
+        <button class="view-tab" data-view="runs" type="button">Run history</button>
         <span id="refreshState" class="refresh-state" aria-live="polite">Loading source data…</span>
       </nav>
 
@@ -58,12 +61,12 @@
 
       <section id="view-overview" class="view-panel" aria-labelledby="overviewTitle">
         <div class="section-heading">
-          <div><p class="eyebrow dark-eyebrow">THE CONTROLLER QUESTION</p><h2 id="overviewTitle">Can we trust this package?</h2></div>
-          <p>Admission happens before interpretation. A failed blocking check is an answer—not a prompt for the agent to guess around it.</p>
+          <div><p class="eyebrow dark-eyebrow">Overview</p><h2 id="overviewTitle">Close package status</h2></div>
+          <p>Review data-quality checks before interpreting exceptions. A failed blocking check stops the investigation.</p>
         </div>
         <div class="overview-grid">
           <article class="surface quality-surface">
-            <div class="surface-topline"><span>01 / DATA ADMISSION</span><span id="qualityBadge" class="status-badge">CHECKING</span></div>
+            <div class="surface-topline"><span>Data admission</span><span id="qualityBadge" class="status-badge">CHECKING</span></div>
             <div class="quality-count"><strong id="qualityCount">—</strong><span id="qualityCountLabel">checks assessed</span></div>
             <p id="qualityExplanation" class="surface-description">Reading the package manifest and reconciliation checks.</p>
             <div id="qualityGroups" class="quality-groups"></div>
@@ -71,15 +74,15 @@
           </article>
           <div class="story-column">
             <button class="story-card story-annual" data-go="annual" type="button">
-              <span class="story-kicker">CASE 01 · EVIDENCE-LED RESOLUTION</span>
-              <span class="story-title">The annual software bill <span aria-hidden="true">↗</span></span>
-              <span class="story-description">A material expense variance may be a timing issue. Follow guidance to current proof, calculate the adjustment, and leave approval to a controller.</span>
+              <span class="story-kicker">Case 01 · Expense variance</span>
+              <span class="story-title">Annual software expense <span aria-hidden="true">↗</span></span>
+              <span class="story-description">Determine whether the September variance is an annual bill recorded in one month. Review current support and the proposed adjustment.</span>
               <span class="story-footer"><span id="overviewVariance">USD — variance</span><span>Explore case →</span></span>
             </button>
             <button class="story-card story-receipts" data-go="receipts" type="button">
-              <span class="story-kicker">CASE 02 · PREVENTIVE CONTROL</span>
-              <span class="story-title">Receipts aging before close <span aria-hidden="true">↗</span></span>
-              <span class="story-description">A worsening unreconciled balance triggers a rule-led escalation. The system does not invent an accounting cause.</span>
+              <span class="story-kicker">Case 02 · Reconciliation control</span>
+              <span class="story-title">Unmatched receipts <span aria-hidden="true">↗</span></span>
+              <span class="story-description">Review the weekly trend and the rule that escalates a recurring break before close, without assuming a root cause.</span>
               <span class="story-footer"><span id="overviewReceipts">USD — unmatched</span><span>Explore case →</span></span>
             </button>
           </div>
@@ -93,13 +96,13 @@
           <span class="logic-arrow" aria-hidden="true">→</span>
           <div><span class="logic-number">4</span><strong>Hand off</strong><small>Human decision</small></div>
         </div>
-        <div class="terminal-note"><span>RUN FROM THE CODEX TERMINAL</span><code>make demo-1</code><code>make demo-2</code><span>The site never starts or approves a workflow.</span></div>
+        <div class="terminal-note"><span>Run in Codex terminal</span><code>make demo-1</code><code>make demo-2</code><span>The site does not start or approve workflows.</span></div>
       </section>
 
       <section id="view-annual" class="view-panel" aria-labelledby="annualTitle" hidden>
         <div class="section-heading">
-          <div><p class="eyebrow dark-eyebrow">CASE 01 / EXPLAIN AND PREPARE</p><h2 id="annualTitle">A variance is the beginning,<br>not the conclusion.</h2></div>
-          <p>The agent starts with an exception and an invoice ID. It must seek current-period support before any resolved finding can reach review.</p>
+          <div><p class="eyebrow dark-eyebrow">Case 01 · Expense variance</p><h2 id="annualTitle">Annual software expense</h2></div>
+          <p>September expense is above budget. Current invoice and contract support are required before a finding can be sent for review.</p>
         </div>
         <div id="annualBlocked" class="blocked-message" hidden></div>
         <div id="annualBody">
@@ -109,12 +112,12 @@
             <div class="money-tile accent-money"><span>MATERIAL VARIANCE</span><strong id="annualVariance">—</strong><small>Calculated by deterministic code</small></div>
           </div>
           <div class="comparison-surface surface">
-            <div class="surface-topline"><span>THE SIGNAL</span><span>USD · SEPTEMBER 2026</span></div>
+            <div class="surface-topline"><span>Expense compared with budget</span><span>USD · September 2026</span></div>
             <div class="comparison-row"><span>Actual expense</span><div class="comparison-track"><span id="actualBar" class="comparison-fill actual-fill"></span></div><strong id="actualBarLabel">—</strong></div>
             <div class="comparison-row"><span>Budget</span><div class="comparison-track"><span id="budgetBar" class="comparison-fill budget-fill"></span></div><strong id="budgetBarLabel">—</strong></div>
           </div>
 
-          <div class="section-heading compact-heading"><div><p class="eyebrow dark-eyebrow">THE INVESTIGATION PATH</p><h3>Click each step to inspect its source.</h3></div><p>Guidance is a lead. Current evidence is proof. Policy and code determine the amount.</p></div>
+          <div class="section-heading compact-heading"><div><p class="eyebrow dark-eyebrow">Evidence trail</p><h3>Review each stage</h3></div><p>Historical guidance is a lead. Current evidence and policy support the calculation.</p></div>
           <div class="evidence-flow" role="group" aria-label="Annual bill evidence path">
             <button class="flow-step is-selected" data-step="signal" type="button" aria-pressed="true"><span>01</span><strong>Exception</strong><small>Ledger + budget</small></button>
             <span class="flow-connector" aria-hidden="true">→</span>
@@ -134,8 +137,8 @@
 
       <section id="view-receipts" class="view-panel" aria-labelledby="receiptsTitle" hidden>
         <div class="section-heading">
-          <div><p class="eyebrow dark-eyebrow">CASE 02 / INTERVENE EARLY</p><h2 id="receiptsTitle">The break is getting older.<br>Close is getting closer.</h2></div>
-          <p>This path does not use an agent to guess why receipts are unmatched. A deterministic rule asks whether a controller should intervene now.</p>
+          <div><p class="eyebrow dark-eyebrow">Case 02 · Reconciliation control</p><h2 id="receiptsTitle">Unmatched customer receipts</h2></div>
+          <p>Review the open balance, item age, and days to close. A deterministic rule determines whether to escalate now.</p>
         </div>
         <div id="receiptsBlocked" class="blocked-message" hidden></div>
         <div id="receiptsBody">
@@ -157,8 +160,8 @@
 
       <section id="view-runs" class="view-panel" aria-labelledby="runsTitle" hidden>
         <div class="section-heading">
-          <div><p class="eyebrow dark-eyebrow">THE IMPROVEMENT LOOP</p><h2 id="runsTitle">Every run should leave evidence.</h2></div>
-          <p>Inspect what was recorded—not a reconstructed chain of private reasoning. Timing, tool use, governance gates, and SME feedback become inputs to the next eval.</p>
+          <div><p class="eyebrow dark-eyebrow">Operations log</p><h2 id="runsTitle">Run history and evidence</h2></div>
+          <p>Review recorded outcomes, tool calls, governance checks, timing, usage, and SME feedback. Private reasoning is not shown.</p>
         </div>
         <div class="run-layout">
           <aside class="surface run-list-surface">
@@ -170,7 +173,7 @@
       </section>
     </main>
 
-    <footer class="site-footer"><span>COBALT PEAK SOFTWARE GROUP · FICTIONAL EDUCATIONAL DATA</span><span>Code calculates · evidence proves · humans decide</span></footer>
+    <footer class="site-footer"><span>Cobalt Peak Software Group · Synthetic demonstration</span><span>Read-only review · No posting or approval</span></footer>
   </div>
 </body>
 </html>

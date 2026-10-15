@@ -123,3 +123,15 @@ def test_direct_html_open_explains_how_to_start_the_local_site(tmp_path):
     assert 'id="annualRunLink"' in html
     assert 'window.location.protocol === "file:"' in script
     assert "make site" in script
+
+
+def test_site_uses_a_restrained_finance_workspace_shell(tmp_path):
+    settings = replace(SETTINGS, outputs_dir=tmp_path / "outputs")
+    html = route_get(settings, "/", "")[2].decode("utf-8")
+    css = route_get(settings, "/styles.css", "")[2].decode("utf-8")
+
+    assert "September close review" in html
+    assert "Annual software expense" in html
+    assert "Run history" in html
+    assert "--paper: #ffffff" in css
+    assert "Georgia" not in css
