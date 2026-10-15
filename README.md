@@ -1,4 +1,4 @@
-# Financial Controller Agent
+# Financial Controller Agentic Workflow
 
 An eval-led, auditable monthly-close demonstration built for a DataCamp session. Every company,
 person, vendor, customer, document, and amount is synthetic.
