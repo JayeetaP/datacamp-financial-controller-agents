@@ -1,0 +1,42 @@
+{
+  "case_id": "annual-software-evidence-id-namespaces",
+  "business_requirement": "Keep current-period supporting documents separate from numeric source lineage so the governed annual-software result can reach human review.",
+  "data_snapshot_id": "PKG-CPS-2026-09-V1",
+  "available_current_evidence_ids": [
+    "INV-SYN-1042",
+    "CONTRACT-SYN-0077"
+  ],
+  "available_numeric_source_ids": [
+    "GL-SYN-6250-0908",
+    "BUD-SYN-6250-SEP",
+    "VAR-annual-software-prepaid-2026-09-6250",
+    "CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30"
+  ],
+  "prohibited_evidence_ids": [
+    "GL-SYN-6250-0908",
+    "BUD-SYN-6250-SEP",
+    "VAR-annual-software-prepaid-2026-09-6250",
+    "CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30",
+    "DRAFT-CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30"
+  ],
+  "expected": {
+    "resolution_status": "RESOLVED",
+    "system_route": "REVIEW",
+    "human_decision": "PENDING",
+    "requested_human_action": "Review the current evidence, deterministic calculation, and unposted draft."
+  },
+  "counterexample": {
+    "case_id": "missing-current-contract",
+    "available_current_evidence_ids": [
+      "INV-SYN-1042"
+    ],
+    "deliberately_missing_evidence_ids": [
+      "CONTRACT-SYN-0077"
+    ],
+    "resolution_status": "PARTIAL",
+    "system_route": "ESCALATE",
+    "human_decision": "PENDING",
+    "draft_adjustment_id": null,
+    "prohibited_claim": "The annual service term is proven."
+  }
+}

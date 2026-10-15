@@ -41,6 +41,7 @@
           "$ref": "#/$defs/Money"
         },
         "source_ids": {
+          "description": "Lineage for this numeric value. May use admitted system-record IDs, current evidence IDs, or deterministic calculation IDs; do not use draft, policy, or knowledge IDs as numeric sources.",
           "items": {
             "type": "string"
           },
@@ -116,6 +117,7 @@
       "type": "array"
     },
     "evidence_ids": {
+      "description": "Current-period supporting-document IDs returned by get_current_evidence only; exclude GL, budget, variance, calculation, draft, policy, and knowledge IDs.",
       "items": {
         "type": "string"
       },

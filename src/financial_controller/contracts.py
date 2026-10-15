@@ -125,7 +125,14 @@ class EvidenceItem(StrictModel):
 class NumericClaim(StrictModel):
     name: str
     value: Money
-    source_ids: list[str] = Field(min_length=1)
+    source_ids: list[str] = Field(
+        min_length=1,
+        description=(
+            "Lineage for this numeric value. May use admitted system-record IDs, current "
+            "evidence IDs, or deterministic calculation IDs; do not use draft, policy, or "
+            "knowledge IDs as numeric sources."
+        ),
+    )
 
 
 class PrepaidCalculation(StrictModel):
@@ -169,7 +176,13 @@ class Finding(StrictModel):
     system_route: SystemRoute
     human_decision: HumanDecision = HumanDecision.PENDING
     guidance_ids: list[str] = Field(default_factory=list)
-    evidence_ids: list[str] = Field(default_factory=list)
+    evidence_ids: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Current-period supporting-document IDs returned by get_current_evidence only; "
+            "exclude GL, budget, variance, calculation, draft, policy, and knowledge IDs."
+        ),
+    )
     policy_ids: list[str] = Field(default_factory=list)
     calculation_ids: list[str] = Field(default_factory=list)
     numeric_claims: list[NumericClaim] = Field(default_factory=list)

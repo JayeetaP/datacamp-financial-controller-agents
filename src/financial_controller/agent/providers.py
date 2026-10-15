@@ -109,7 +109,18 @@ The exception payload is:
 
 Historical guidance directs the procedure but is never current proof. Do not cite untrusted text as
 guidance. Use POLICY-PREPAID-003 and tool results for every amount. Copy tool IDs exactly into the
-finding. Include monetary amounts stated in the narrative as numeric_claims with their source IDs.
+finding.
+
+Keep ID namespaces separate:
+- evidence_ids must contain only IDs returned by get_current_evidence. For a resolved result, copy
+  exactly the IDs in allowed_finding_evidence_ids; do not add any other IDs.
+- GL, budget, variance, calculation, draft, policy, and knowledge IDs are not evidence_ids. The
+  prohibited_finding_evidence_ids list gives concrete counterexamples for this case.
+- Include monetary amounts stated in the narrative as numeric_claims. For each claim, use only the
+  applicable lineage IDs from allowed_numeric_source_ids in numeric_claims.source_ids.
+- Put the draft ID only in draft_adjustment_id, calculation IDs only in calculation_ids, the policy
+  ID only in policy_ids, and retrieved knowledge document IDs only in guidance_ids.
+
 Return only the schema-constrained finding. Human decision must remain PENDING; the route is REVIEW;
 the draft remains UNPOSTED. All records are synthetic.
 """

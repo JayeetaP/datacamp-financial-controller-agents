@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from financial_controller.agent.providers import strict_output_schema
+from financial_controller.agent.providers import CodexProvider, strict_output_schema
 from financial_controller.config import SETTINGS
 from financial_controller.contracts import Finding
 from financial_controller.gates.audit import audit_finding
@@ -75,3 +75,31 @@ def test_codex_output_schema_requires_every_property() -> None:
         if "properties" in definition:
             assert set(definition["required"]) == set(definition["properties"])
             assert definition["additionalProperties"] is False
+
+
+def test_codex_prompt_keeps_evidence_and_numeric_source_ids_separate() -> None:
+    regression = json.loads(
+        (
+            SETTINGS.project_root
+            / "evals/fixtures/evidence_id_namespace_regression.json"
+        ).read_text(encoding="utf-8")
+    )
+    prompt = CodexProvider(SETTINGS)._prompt(
+        {
+            "case_id": "annual-software-prepaid",
+            "data_snapshot_id": regression["data_snapshot_id"],
+            "linked_current_evidence_ids": ["INV-SYN-1042"],
+            "allowed_finding_evidence_ids": regression[
+                "available_current_evidence_ids"
+            ],
+            "allowed_numeric_source_ids": regression["available_numeric_source_ids"],
+            "prohibited_finding_evidence_ids": regression["prohibited_evidence_ids"],
+        }
+    )
+
+    assert "evidence_ids must contain only IDs returned by get_current_evidence" in prompt
+    assert "numeric_claims.source_ids" in prompt
+    for evidence_id in regression["available_current_evidence_ids"]:
+        assert evidence_id in prompt
+    for source_id in regression["prohibited_evidence_ids"]:
+        assert source_id in prompt
