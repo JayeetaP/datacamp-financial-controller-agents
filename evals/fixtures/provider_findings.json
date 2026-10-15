@@ -1,0 +1,43 @@
+{
+  "annual-software-prepaid": {
+    "case_id": "annual-software-prepaid",
+    "observation": "September software subscriptions were USD 144,000 against a USD 12,000 budget, a USD 132,000 unfavorable variance.",
+    "root_cause": "The current invoice was recorded fully to software expense, while the linked current contract covers twelve months from September 2026 through August 2027.",
+    "resolution_status": "RESOLVED",
+    "system_route": "REVIEW",
+    "human_decision": "PENDING",
+    "guidance_ids": ["KB-CLOSE-014", "KB-POLICY-PREPAID-003", "CASE-SYN-2025-009"],
+    "evidence_ids": ["INV-SYN-1042", "CONTRACT-SYN-0077"],
+    "policy_ids": ["POLICY-PREPAID-003"],
+    "calculation_ids": ["VAR-annual-software-prepaid-2026-09-6250", "CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30"],
+    "numeric_claims": [
+      {"name": "September actual", "value": {"amount_cents": 14400000, "currency": "USD"}, "source_ids": ["GL-SYN-6250-0908"]},
+      {"name": "September budget", "value": {"amount_cents": 1200000, "currency": "USD"}, "source_ids": ["BUD-SYN-6250-SEP"]},
+      {"name": "unfavorable variance", "value": {"amount_cents": 13200000, "currency": "USD"}, "source_ids": ["VAR-annual-software-prepaid-2026-09-6250"]},
+      {"name": "contract total", "value": {"amount_cents": 14400000, "currency": "USD"}, "source_ids": ["CONTRACT-SYN-0077"]},
+      {"name": "September expense", "value": {"amount_cents": 1200000, "currency": "USD"}, "source_ids": ["CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30"]},
+      {"name": "remaining prepaid", "value": {"amount_cents": 13200000, "currency": "USD"}, "source_ids": ["CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30"]}
+    ],
+    "draft_adjustment_id": "DRAFT-CALC-PREPAID-CONTRACT-SYN-0077-2026-09-30",
+    "unresolved_questions": [],
+    "requested_human_action": "Review and approve or reject the unposted USD 132,000 prepaid reclassification.",
+    "rationale": "Current invoice and contract evidence support the service term. Canonical policy and deterministic calculation allocate USD 12,000 to September and USD 132,000 to remaining prepaid. Historical documents supplied the procedure only."
+  },
+  "missing-current-contract": {
+    "case_id": "missing-current-contract",
+    "observation": "The software renewal is material, but only the current invoice is available.",
+    "root_cause": null,
+    "resolution_status": "PARTIAL",
+    "system_route": "ESCALATE",
+    "human_decision": "PENDING",
+    "guidance_ids": ["KB-CLOSE-014"],
+    "evidence_ids": ["INV-SYN-1042"],
+    "policy_ids": ["POLICY-PREPAID-003"],
+    "calculation_ids": [],
+    "numeric_claims": [],
+    "draft_adjustment_id": null,
+    "unresolved_questions": ["What are the current contract service dates?"],
+    "requested_human_action": "Provide the current signed contract before calculating or drafting an adjustment.",
+    "rationale": "Historical guidance cannot prove the current service period, so the exception cannot be resolved."
+  }
+}

@@ -1,0 +1,3 @@
+source_id,period,entity_id,account_id,amount,currency,journal_id
+GL-SYN-6250-0908,2026-09,CPS-US,6250,144000.00,USD,JE-SYN-0908-014
+GL-SYN-1100-0925,2026-09,CPS-US,1100,512400.00,USD,SYSTEM-AR-SEP

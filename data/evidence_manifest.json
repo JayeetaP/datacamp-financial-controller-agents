@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "synthetic": true,
+  "records": [
+    {
+      "evidence_id": "INV-SYN-1042",
+      "source_type": "vendor_invoice",
+      "file": "data/canonical/vendor_invoices.csv",
+      "source_record_id": "NGS-2026-1042",
+      "period": "2026-09",
+      "entity_id": "CPS-US",
+      "trust": "SUPPORTING_DOCUMENT",
+      "content_hash": "f40d6699cc5f33c0c602b3c1730f63b4d467eecdd48e2080ca139b0684b12d4e",
+      "allowed_use": "current_period_proof"
+    },
+    {
+      "evidence_id": "CONTRACT-SYN-0077",
+      "source_type": "contract",
+      "file": "data/canonical/contracts.csv",
+      "source_record_id": "CONTRACT-SYN-0077",
+      "period": "2026-09",
+      "entity_id": "CPS-US",
+      "trust": "SUPPORTING_DOCUMENT",
+      "content_hash": "3e4436823ea51e5e23c1fb241b85150102b5b9de1daefe1c4c2f4a87e0b8902f",
+      "allowed_use": "current_period_proof"
+    }
+  ]
+}

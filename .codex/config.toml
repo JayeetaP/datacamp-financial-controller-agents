@@ -1,0 +1,7 @@
+[mcp_servers.finance_demo]
+command = "uv"
+args = ["run", "financial-controller-mcp"]
+enabled = true
+startup_timeout_sec = 20
+tool_timeout_sec = 45
+default_tools_approval_mode = "approve"

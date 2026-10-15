@@ -1,0 +1,65 @@
+{
+  "package_id": "PKG-CPS-2026-09-V1",
+  "schema_version": "1.0",
+  "reporting_period": "2026-09",
+  "entity_id": "CPS-US",
+  "synthetic": true,
+  "extracted_at": "2026-09-25T18:00:00Z",
+  "files": [
+    {
+      "name": "chart_of_accounts.csv",
+      "sha256": "1fa042ceab9e29279d195acf5fd6aed5bf7e8497a3325936e27fd0a04a5bca7c",
+      "row_count": 6
+    },
+    {
+      "name": "gl_actuals.csv",
+      "sha256": "cca5bad08ceee8a0f558c8b7c28c7b5589e838ffc65fdfb6be9dc5404b2a1994",
+      "row_count": 2
+    },
+    {
+      "name": "journal_lines.csv",
+      "sha256": "edf5ec2e8cbd0e5243b16d70c9b9cfbb446ddba32b7ca1dc836494f5740f3189",
+      "row_count": 2
+    },
+    {
+      "name": "budget.csv",
+      "sha256": "990fca1dd299ab40898d63051dc8fa945fba50843029c26064bcbb272c013490",
+      "row_count": 1
+    },
+    {
+      "name": "vendor_invoices.csv",
+      "sha256": "a4210aff115199ec80c841d5857c5993d4e6de3d615beaf2f75cf04a7fdb8474",
+      "row_count": 1
+    },
+    {
+      "name": "contracts.csv",
+      "sha256": "86404504b909949b4fc88518836596b598b5f0375bf92c41344c4986f0819f67",
+      "row_count": 1
+    },
+    {
+      "name": "bank_receipts.csv",
+      "sha256": "4d50d73706641e87d75079087de0d8ad219beb718edd7e72a663b72438a7caa9",
+      "row_count": 3
+    },
+    {
+      "name": "ar_open_invoices.csv",
+      "sha256": "7694902945505104dfe41d23d4484f52598ebef515f7cf4e8972ebcbeece3636",
+      "row_count": 3
+    },
+    {
+      "name": "unmatched_customer_payments.csv",
+      "sha256": "32f13919f1c7409d1839b76d6267bcb5ee38b7137a389ac4785c8935b2b30051",
+      "row_count": 3
+    },
+    {
+      "name": "process_owners.csv",
+      "sha256": "bb4d7acbe4cf5e17577da4fec49679dd8efe5865f06fed1bc40a559b0e4aa7d6",
+      "row_count": 1
+    },
+    {
+      "name": "close_calendar.csv",
+      "sha256": "4f97d572497a3309c3f51520639368e4f52d22eb91106194fcb83f241abceb20",
+      "row_count": 1
+    }
+  ]
+}

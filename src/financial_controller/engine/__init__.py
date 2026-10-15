@@ -1,0 +1,1 @@
+"""Deterministic financial calculations."""

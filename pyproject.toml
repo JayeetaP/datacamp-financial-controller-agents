@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "financial-controller-agent"
+version = "0.1.0"
+description = "Synthetic, eval-led financial close agent demonstration"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Jayeeta Putatunda" }]
+dependencies = [
+  "mcp>=1.12,<2",
+  "pydantic>=2.10,<3",
+  "PyYAML>=6.0,<7",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "pytest-cov>=6,<7",
+  "ruff>=0.11,<1",
+]
+
+[project.scripts]
+financial-controller = "financial_controller.cli:main"
+financial-controller-mcp = "financial_controller.mcp_server.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/financial_controller"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "live: invokes the ChatGPT-authenticated Codex runtime",
+  "demo_red: intentional before-fix demonstration",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

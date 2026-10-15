@@ -1,0 +1,434 @@
+{
+  "$defs": {
+    "Finding": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "observation": {
+          "title": "Observation",
+          "type": "string"
+        },
+        "root_cause": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Root Cause"
+        },
+        "resolution_status": {
+          "$ref": "#/$defs/ResolutionStatus"
+        },
+        "system_route": {
+          "$ref": "#/$defs/SystemRoute"
+        },
+        "human_decision": {
+          "$ref": "#/$defs/HumanDecision",
+          "default": "PENDING"
+        },
+        "guidance_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Guidance Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "policy_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Policy Ids",
+          "type": "array"
+        },
+        "calculation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Calculation Ids",
+          "type": "array"
+        },
+        "numeric_claims": {
+          "items": {
+            "$ref": "#/$defs/NumericClaim"
+          },
+          "title": "Numeric Claims",
+          "type": "array"
+        },
+        "draft_adjustment_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Adjustment Id"
+        },
+        "unresolved_questions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Questions",
+          "type": "array"
+        },
+        "requested_human_action": {
+          "title": "Requested Human Action",
+          "type": "string"
+        },
+        "rationale": {
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "observation",
+        "root_cause",
+        "resolution_status",
+        "system_route",
+        "requested_human_action",
+        "rationale"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "GateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "gate_id": {
+          "title": "Gate Id",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "related_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Related Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "gate_id",
+        "passed",
+        "message"
+      ],
+      "title": "GateResult",
+      "type": "object"
+    },
+    "HumanDecision": {
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "REJECTED",
+        "RETURNED_FOR_WORK"
+      ],
+      "title": "HumanDecision",
+      "type": "string"
+    },
+    "Money": {
+      "additionalProperties": false,
+      "properties": {
+        "amount_cents": {
+          "title": "Amount Cents",
+          "type": "integer"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount_cents",
+        "currency"
+      ],
+      "title": "Money",
+      "type": "object"
+    },
+    "NumericClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/Money"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "source_ids"
+      ],
+      "title": "NumericClaim",
+      "type": "object"
+    },
+    "ResolutionStatus": {
+      "enum": [
+        "RESOLVED",
+        "PARTIAL",
+        "UNRESOLVED"
+      ],
+      "title": "ResolutionStatus",
+      "type": "string"
+    },
+    "SystemRoute": {
+      "enum": [
+        "NO_ACTION",
+        "REVIEW",
+        "ESCALATE",
+        "HARD_BLOCK"
+      ],
+      "title": "SystemRoute",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "mode": {
+      "title": "Mode",
+      "type": "string"
+    },
+    "provider": {
+      "title": "Provider",
+      "type": "string"
+    },
+    "authentication_mode": {
+      "title": "Authentication Mode",
+      "type": "string"
+    },
+    "requested_model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Requested Model"
+    },
+    "returned_model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Returned Model"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "completed_at": {
+      "format": "date-time",
+      "title": "Completed At",
+      "type": "string"
+    },
+    "duration_ms": {
+      "title": "Duration Ms",
+      "type": "integer"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "input_tokens": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Input Tokens"
+    },
+    "cached_input_tokens": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Cached Input Tokens"
+    },
+    "output_tokens": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Output Tokens"
+    },
+    "reasoning_output_tokens": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reasoning Output Tokens"
+    },
+    "billing_mode": {
+      "default": "chatgpt_subscription",
+      "title": "Billing Mode",
+      "type": "string"
+    },
+    "provider_cost_usd": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Provider Cost Usd"
+    },
+    "trace_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace Id"
+    },
+    "data_snapshot_id": {
+      "title": "Data Snapshot Id",
+      "type": "string"
+    },
+    "harness_version": {
+      "title": "Harness Version",
+      "type": "string"
+    },
+    "retrieval_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Retrieval Ids",
+      "type": "array"
+    },
+    "tool_names": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Tool Names",
+      "type": "array"
+    },
+    "gate_results": {
+      "items": {
+        "$ref": "#/$defs/GateResult"
+      },
+      "title": "Gate Results",
+      "type": "array"
+    },
+    "finding": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Finding"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "artifact_paths": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Artifact Paths",
+      "type": "array"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    }
+  },
+  "required": [
+    "run_id",
+    "case_id",
+    "mode",
+    "provider",
+    "authentication_mode",
+    "requested_model",
+    "returned_model",
+    "started_at",
+    "completed_at",
+    "duration_ms",
+    "status",
+    "data_snapshot_id",
+    "harness_version"
+  ],
+  "title": "AgentRunRecord",
+  "type": "object"
+}

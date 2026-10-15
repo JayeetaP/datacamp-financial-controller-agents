@@ -1,0 +1,185 @@
+{
+  "$defs": {
+    "HumanDecision": {
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "REJECTED",
+        "RETURNED_FOR_WORK"
+      ],
+      "title": "HumanDecision",
+      "type": "string"
+    },
+    "Money": {
+      "additionalProperties": false,
+      "properties": {
+        "amount_cents": {
+          "title": "Amount Cents",
+          "type": "integer"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount_cents",
+        "currency"
+      ],
+      "title": "Money",
+      "type": "object"
+    },
+    "NumericClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/Money"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "source_ids"
+      ],
+      "title": "NumericClaim",
+      "type": "object"
+    },
+    "ResolutionStatus": {
+      "enum": [
+        "RESOLVED",
+        "PARTIAL",
+        "UNRESOLVED"
+      ],
+      "title": "ResolutionStatus",
+      "type": "string"
+    },
+    "SystemRoute": {
+      "enum": [
+        "NO_ACTION",
+        "REVIEW",
+        "ESCALATE",
+        "HARD_BLOCK"
+      ],
+      "title": "SystemRoute",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "observation": {
+      "title": "Observation",
+      "type": "string"
+    },
+    "root_cause": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Root Cause"
+    },
+    "resolution_status": {
+      "$ref": "#/$defs/ResolutionStatus"
+    },
+    "system_route": {
+      "$ref": "#/$defs/SystemRoute"
+    },
+    "human_decision": {
+      "$ref": "#/$defs/HumanDecision",
+      "default": "PENDING"
+    },
+    "guidance_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Guidance Ids",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "policy_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Policy Ids",
+      "type": "array"
+    },
+    "calculation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Calculation Ids",
+      "type": "array"
+    },
+    "numeric_claims": {
+      "items": {
+        "$ref": "#/$defs/NumericClaim"
+      },
+      "title": "Numeric Claims",
+      "type": "array"
+    },
+    "draft_adjustment_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Draft Adjustment Id"
+    },
+    "unresolved_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Questions",
+      "type": "array"
+    },
+    "requested_human_action": {
+      "title": "Requested Human Action",
+      "type": "string"
+    },
+    "rationale": {
+      "title": "Rationale",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "observation",
+    "root_cause",
+    "resolution_status",
+    "system_route",
+    "requested_human_action",
+    "rationale"
+  ],
+  "title": "Finding",
+  "type": "object"
+}

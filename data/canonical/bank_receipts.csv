@@ -1,0 +1,4 @@
+receipt_id,bank_date,amount,currency,customer_reference
+REC-SYN-001,2026-09-08,4100.00,USD,CUST-SYN-A
+REC-SYN-002,2026-09-13,3700.00,USD,CUST-SYN-B
+REC-SYN-003,2026-09-20,4600.00,USD,CUST-SYN-C

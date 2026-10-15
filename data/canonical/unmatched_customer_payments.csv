@@ -1,0 +1,4 @@
+check_date,unmatched_amount,oldest_receipt_days,status,currency
+2026-09-11,4100.00,3,OPEN,USD
+2026-09-18,7800.00,10,OPEN,USD
+2026-09-25,12400.00,17,OPEN,USD

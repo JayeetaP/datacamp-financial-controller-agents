@@ -1,0 +1,7 @@
+account_id,account_name,account_type,currency
+1000,Cash,ASSET,USD
+1100,Accounts receivable,ASSET,USD
+1450,Prepaid software,ASSET,USD
+2000,Accounts payable,LIABILITY,USD
+3000,Synthetic equity,EQUITY,USD
+6250,Software subscriptions,EXPENSE,USD

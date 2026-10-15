@@ -1,0 +1,3 @@
+line_id,journal_id,period,entity_id,account_id,debit,credit,currency,memo,source_id
+JL-SYN-0908-014-1,JE-SYN-0908-014,2026-09,CPS-US,6250,144000.00,0.00,USD,Enterprise Platform Renewal — synthetic record,INV-SYN-1042
+JL-SYN-0908-014-2,JE-SYN-0908-014,2026-09,CPS-US,2000,0.00,144000.00,USD,Enterprise Platform Renewal — synthetic record,INV-SYN-1042

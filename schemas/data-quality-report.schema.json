@@ -1,0 +1,97 @@
+{
+  "$defs": {
+    "CheckSeverity": {
+      "enum": [
+        "INFO",
+        "WARNING",
+        "BLOCKING"
+      ],
+      "title": "CheckSeverity",
+      "type": "string"
+    },
+    "DataQualityCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "check_id": {
+          "title": "Check Id",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "severity": {
+          "$ref": "#/$defs/CheckSeverity"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "check_id",
+        "passed",
+        "severity",
+        "message"
+      ],
+      "title": "DataQualityCheck",
+      "type": "object"
+    },
+    "DataQualityStatus": {
+      "enum": [
+        "READY",
+        "READY_WITH_WARNINGS",
+        "BLOCKED"
+      ],
+      "title": "DataQualityStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/DataQualityStatus"
+    },
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/DataQualityCheck"
+      },
+      "title": "Checks",
+      "type": "array"
+    },
+    "quarantined_records": {
+      "default": 0,
+      "title": "Quarantined Records",
+      "type": "integer"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "package_id",
+    "schema_version",
+    "status",
+    "checks",
+    "generated_at"
+  ],
+  "title": "DataQualityReport",
+  "type": "object"
+}

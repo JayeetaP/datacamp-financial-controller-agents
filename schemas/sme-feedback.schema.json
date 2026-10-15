@@ -1,0 +1,74 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "feedback_id": {
+      "title": "Feedback Id",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "reviewer_role": {
+      "title": "Reviewer Role",
+      "type": "string"
+    },
+    "reviewed_at": {
+      "format": "date-time",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "verdict": {
+      "title": "Verdict",
+      "type": "string"
+    },
+    "route_correct": {
+      "title": "Route Correct",
+      "type": "boolean"
+    },
+    "accounting_conclusion_correct": {
+      "title": "Accounting Conclusion Correct",
+      "type": "boolean"
+    },
+    "evidence_sufficient": {
+      "title": "Evidence Sufficient",
+      "type": "boolean"
+    },
+    "missing_evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Evidence Ids",
+      "type": "array"
+    },
+    "failure_categories": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Categories",
+      "type": "array"
+    },
+    "reviewer_note": {
+      "title": "Reviewer Note",
+      "type": "string"
+    },
+    "nominate_as_eval": {
+      "default": false,
+      "title": "Nominate As Eval",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "feedback_id",
+    "run_id",
+    "reviewer_role",
+    "reviewed_at",
+    "verdict",
+    "route_correct",
+    "accounting_conclusion_correct",
+    "evidence_sufficient",
+    "reviewer_note"
+  ],
+  "title": "SMEFeedback",
+  "type": "object"
+}

@@ -1,0 +1,2 @@
+evidence_id,invoice_id,vendor_name,contract_id,amount,currency,invoice_date,description,entity_id,period
+INV-SYN-1042,NGS-2026-1042,NimbusGrid Systems (Synthetic),CONTRACT-SYN-0077,144000.00,USD,2026-09-05,Enterprise Platform Renewal,CPS-US,2026-09

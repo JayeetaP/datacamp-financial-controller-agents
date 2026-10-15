@@ -1,0 +1,28 @@
+version: "2026.09-demo.1"
+synthetic: true
+reporting:
+  period: "2026-09"
+  currency: "USD"
+materiality:
+  minimum_amount_cents: 1000000
+  minimum_percentage_basis_points: 1000
+  absolute_amount_cents: 2500000
+prepaid_software:
+  policy_id: "POLICY-PREPAID-003"
+  minimum_invoice_cents: 1200000
+  minimum_term_months: 4
+  convention: "whole_month_straight_line"
+  prepaid_account: "1450"
+  expense_account: "6250"
+unmatched_receipts:
+  policy_id: "POLICY-AR-007"
+  consecutive_failed_checks: 3
+  minimum_balance_cents: 1000000
+  minimum_oldest_age_days_exclusive: 14
+  close_within_business_days: 5
+evidence:
+  historical_guidance_is_current_proof: false
+  missing_material_support_route: "ESCALATE"
+human_control:
+  draft_status: "UNPOSTED"
+  only_human_can_approve: true
