@@ -1,4 +1,4 @@
-.PHONY: setup data schemas test lint eval-replay eval-live demo-1 demo-2 demo-red verify report mcp
+.PHONY: setup data schemas test lint eval-replay eval-live demo-1 demo-2 demo-red verify report mcp site
 
 setup:
 	uv sync --extra dev
@@ -40,6 +40,9 @@ report:
 
 mcp:
 	uv run financial-controller-mcp
+
+site:
+	uv run financial-controller site
 
 verify:
 	uv lock --check

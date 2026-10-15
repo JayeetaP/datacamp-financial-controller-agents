@@ -39,7 +39,7 @@ make verify
 codex login status
 ```
 
-`make verify` checks `uv.lock`, generated data and knowledge, lint, twelve normal tests, and five
+`make verify` checks `uv.lock`, generated data and knowledge, lint, normal tests, and five
 replay eval cases. `codex login status` should report a ChatGPT login before a live run. No
 `OPENAI_API_KEY` is needed for the Codex path.
 
@@ -64,15 +64,40 @@ uv run financial-controller run --case annual-software-prepaid --mode replay
 
 ## Inspect what happened
 
+For the visual walkthrough in Codex desktop, start the local review site in a separate terminal
+and leave it running:
+
+```bash
+make site
+```
+
+Open [http://127.0.0.1:4173/](http://127.0.0.1:4173/) in the Codex browser. Begin with
+**Overview** to ask whether the source package is trustworthy. In **Annual bill**, click the five
+evidence steps to distinguish the exception, historical lead, current invoice and contract,
+deterministic calculation, and unposted handoff. Step 05 is complete when a reviewable draft and
+recorded gates are available; it does **not** mean the controller has approved or posted it.
+**Aging receipts** shows the three checks and four escalation thresholds. **Run evidence** shows
+saved live or replay outcomes, elapsed time, tokens, tool calls, governance gates, and any SME
+review. Refresh after a new run.
+
+The case panels are source-derived previews of the current validated synthetic package. The
+selected saved run is identified separately; do not describe a preview as an agent action. The
+site is read-only, binds to localhost, and requires no model credential.
+Do not open `src/financial_controller/site/static/index.html` as a file; the HTML shell needs the
+localhost server to load source data and saved runs.
+
+For the underlying files and text export:
+
 ```bash
 uv run financial-controller runs --limit 5
 uv run financial-controller report --latest
 ```
 
 Each run writes `outputs/runs/<run-id>/run.json` and `events.jsonl`, plus Markdown and HTML in
-`outputs/reports/`. The SQLite ledger is `outputs/run_ledger.sqlite3`. Open the HTML report in
-Codex for the review output; open `events.jsonl` to show the live search, evidence, calculation,
-and draft tool calls. The [process design](process-design.md) explains each stage before you run it.
+`outputs/reports/`. The SQLite ledger is `outputs/run_ledger.sqlite3`. The older HTML report is a
+plain text-style export; use the local site for the visual walkthrough. Open `events.jsonl` only
+when the raw trace needs inspection. The [process design](process-design.md) explains each stage
+before you run it.
 
 ## Show the eval-led repair loop
 

@@ -19,6 +19,8 @@ flowchart LR
     I -->|pass| J[Unposted review package]
     I -->|fail| K[Fail closed]
     J --> L[SQLite run ledger + JSONL events + Markdown/HTML report]
+    B --> V[Local read-only review site]
+    L --> V
     L --> M[SME feedback]
     M --> N[Frozen regression eval]
     N --> O[Codex code change]
@@ -35,6 +37,7 @@ flowchart LR
 | Explanation | Agent under a typed schema | Language is useful after facts are grounded |
 | Approval | Human controller | The system only creates an unposted draft |
 | Improvement | Eval-led development loop | Confirmed failures become tests before changes |
+| Visual review | Read-only localhost site | Browser renders curated state; Python keeps admission and finance logic |
 
 ## Live provider path
 
@@ -69,6 +72,7 @@ loaded directly by the live investigator.
 │   ├── observability/       SQLite run ledger and raw event artifacts
 │   ├── quality/             data admission checks
 │   ├── reporting/           governed Markdown and HTML output
+│   ├── site/                local read-only visual review
 │   ├── retrieval/           stable local knowledge search
 │   └── workflows/           end-to-end orchestration
 └── tests/                   deterministic regression suite

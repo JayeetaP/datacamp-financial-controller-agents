@@ -12,6 +12,7 @@ from financial_controller.evaluation.runner import run_evaluations
 from financial_controller.observability.store import RunStore
 from financial_controller.quality.validator import validate_package
 from financial_controller.reporting.render import render_run_report
+from financial_controller.site.server import run_site
 from financial_controller.workflows.runner import WorkflowRunner, record_as_json
 
 
@@ -46,6 +47,9 @@ def _build_parser() -> argparse.ArgumentParser:
 
     runs_parser = subparsers.add_parser("runs", help="List normalized run history")
     runs_parser.add_argument("--limit", type=int, default=10)
+
+    site_parser = subparsers.add_parser("site", help="Serve the local read-only review site")
+    site_parser.add_argument("--port", type=int, default=4173)
 
     feedback_parser = subparsers.add_parser("feedback", help="Attach structured SME feedback")
     feedback_parser.add_argument("--run-id", required=True)
@@ -94,6 +98,10 @@ def main() -> int:
             for record in _store().list_runs(args.limit)
         ]
         print(json.dumps(rows, indent=2))
+        return 0
+
+    if args.command == "site":
+        run_site(SETTINGS, port=args.port)
         return 0
 
     if args.command == "feedback":

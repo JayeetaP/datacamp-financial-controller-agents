@@ -26,7 +26,8 @@ post or approve one.
 | Investigator | `codex exec` using the saved ChatGPT login and scoped local MCP tools; replay fixture for offline runs | `src/financial_controller/agent/` |
 | Decision gates | Evidence IDs, numeric claims, current proof, human authority, draft balance, and unsafe guidance | `src/financial_controller/gates/` |
 | Run history | SQLite ledger, JSONL events, finding JSON, Markdown and basic HTML reports, SME feedback command | `outputs/` after a run |
-| Release gate | Twelve normal tests and five replay eval cases; a separate intentional red test for live repair | `make verify`, `make demo-red` |
+| Local visual review | Read-only site for admission, both cases, saved traces, gates, telemetry, and SME feedback | `make site` and [visual review](../visualization-plan.md) |
+| Release gate | Normal tests and five replay eval cases; a separate intentional red test for live repair | `make verify`, `make demo-red` |
 
 The last verified live investigation succeeded through the saved Codex login in about 29 seconds.
 That is one rehearsal observation, not a latency guarantee. Subscription usage reports token counts
@@ -61,26 +62,26 @@ flowchart LR
    a schema-constrained output. Replay uses the same finding contract.
 5. **Gate and record every outcome — done at the current scope.** The runner recomputes the
    calculation, checks evidence and authority, saves normalized runs, and generates review output.
-6. **Make the workflow legible at a glance — GitHub diagrams now; product view next.** The
-   [process design](../process-design.md) maps stages, sources, and both demo paths. The
-   [visualization plan](../visualization-plan.md) specifies the read-only review screen and the
-   missing output contracts needed to build it.
+6. **Make the workflow legible at a glance — local view done.** The
+   [process design](../process-design.md) maps stages, sources, and both demo paths. `make site`
+   opens a read-only review in Codex desktop. The [visual review notes](../visualization-plan.md)
+   distinguish its current presentation scope from the remaining per-run provenance work.
 
 ## The next work, in order
 
 | Priority | Change | Why it matters | Proof before moving on |
 |---|---|---|---|
-| 1 | Persist a `quality.json`, the exact search hits, calculation, and draft alongside each run | The visual view needs complete, typed stage artifacts; today several facts are only in JSONL or recomputed locally | A replay run exposes every stage without parsing prose |
+| 1 | Persist a `quality.json`, the exact search hits, calculation, and draft alongside each run | The local site works, but several facts are only in JSONL or recomputed from the current package | A replay run exposes every frozen stage without parsing prose |
 | 2 | Add row-level data contracts and record blocked admission consistently | Today's schema check covers columns, not every cell type, null, date, or duplicate key; receipts exits without a blocked run record | Invalid rows have explicit failing checks, and either case saves `BLOCKED_DATA_QUALITY` without a model call |
 | 3 | Replace the embedded investigation instructions with a versioned finance playbook, preserving the six-tool boundary | The SME knowledge and harness engineering story should be visible in code and trace | Same five evals pass; prompt/playbook version is recorded in the run |
 | 4 | Strengthen the missing-contract and malicious-retrieval evals into full workflow variants | Current cases prove fixture behavior and trust labels, but not all live failure paths | A missing current contract cannot produce a resolved draft; unsafe text cannot change approval |
-| 5 | Build a read-only review board from the typed artifacts | The current HTML report is a text export; it does not show the data flow or evidence graph | Reviewer can follow each material claim back to a current source and inspect every gate |
+| 5 | Deepen the local review into exact claim-level provenance from frozen artifacts | Today's five-step path shows source IDs, but not every content hash, claim edge, or per-run draft line | Reviewer can follow each material claim to the exact versioned source and gate |
 | 6 | Compare providers only after the same eval suite runs across them | Model breadth is useful only if control quality survives the switch | Same inputs, contracts, gates, and scored cases across providers |
 
 The two workflows should also handle blocked admission consistently. The annual case records a
-`BLOCKED_DATA_QUALITY` run; the receipt case currently raises an error before saving a run. Before
-the review board is built, route both through the same blocked-run contract and add a regression
-test. Otherwise the visual history would omit one of the most important outcomes.
+`BLOCKED_DATA_QUALITY` run; the receipt case currently raises an error before saving a run. The
+local site hides case outputs when current admission fails, but a historical blocked receipt run
+still needs the same contract. Add that regression before claiming complete blocked-run history.
 
 The OpenAI Agents SDK is a possible standalone runtime for typed tools, guardrails, sessions, and
 tracing when application authentication is available. OpenRouter is a later model comparison
@@ -102,6 +103,6 @@ and [demo commands](../run-the-demo.md).
 
 ## Scope of this checkpoint
 
-The next visual layer is a read-only explanation of validated results. A presentation Site can be
-considered once that local view works inside Codex and has no accounting logic of its own. Real
+The local visual layer is a read-only explanation of validated results and saved run evidence.
+A separately hosted presentation Site is optional; the Codex demo uses the localhost view. Real
 ERP, bank, Confluence, approval, or posting integrations are outside this synthetic demo.

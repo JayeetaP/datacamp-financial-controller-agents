@@ -1,66 +1,59 @@
-# Plan for a visual review experience
+# Visual review experience
 
-The [process design](process-design.md) is the GitHub-readable map. The next product view should
-let someone inspect one real run without reading raw JSONL. It should render the validated outputs
-already produced by the workflow, not calculate accounting results in the browser.
+The [process design](process-design.md) is the GitHub-readable map. The local review site turns
+the same synthetic close into a walkthrough inside Codex desktop. Start it with `make site`, then
+open [http://127.0.0.1:4173/](http://127.0.0.1:4173/). It does not need an API key or a hosted
+service.
 
-## The screen to build
-
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ SYNTHETIC DATA  •  period  •  case  •  mode  •  run status  •  elapsed time │
-├──────────────────────┬───────────────────────────────┬──────────────────────┤
-│ 1. PACKAGE HEALTH    │ 2. EXCEPTION AND EVIDENCE     │ 3. DECISION          │
-│ schema / completeness│ variance or receipt trend     │ finding and route    │
-│ reconciliation checks│ source → guidance → current   │ grounded claims      │
-│ blocked items         │ evidence → calculation        │ unposted draft       │
-├──────────────────────┴───────────────────────────────┴──────────────────────┤
-│ 4. RUN TIMELINE: search → evidence → calculation → gates → report            │
-│    tool calls, retrieved IDs, timing, token usage, feedback and eval links  │
-└─────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    A[Validated synthetic package] --> B[Read-only site view model]
+    C[Saved run.json + events.jsonl] --> B
+    D[SQLite SME feedback] --> B
+    B --> E[Overview: data admission]
+    E --> F[Annual bill: evidence chain]
+    E --> G[Aging receipts: preventive rule]
+    F --> H[Run evidence: result, tools, gates, telemetry]
+    G --> H
 ```
 
-The most useful interaction is clicking a claim such as “USD 132,000 prepaid” and seeing the
-calculation, current contract, invoice, policy, and gate that support it. Historical guidance must
-have a different visual treatment from current proof. A blocked package should show the failed
-check before any investigation panel appears.
+## What is implemented
 
-## Build it in three passes
+| View | What a reviewer can inspect | Truth boundary |
+|---|---|---|
+| Overview | The full admission checklist, grouped status, and two case entry points | A blocked package hides derived case outputs |
+| Annual bill | Variance, historical guidance, current invoice and contract, prepaid calculation, unposted draft | The five-step path is a **source-derived preview**; a saved run's finding is labeled separately |
+| Aging receipts | Three weekly snapshots, amounts, item age, four rule thresholds, and escalation owner | The control is deterministic; no root cause or entry is invented |
+| Run evidence | Saved live/replay result, time, tokens, reported cost, selected tool calls and IDs, gates, SME feedback | Only recorded tool completions are shown; no private reasoning is reconstructed |
 
-| Pass | Deliverable | Input contract | Exit criterion |
-|---|---|---|---|
-| 0 — now | Mermaid maps in the README and process design | Versioned Markdown and source paths | A GitHub reader can follow both cases from data to decision |
-| 1 — next | Persist a complete per-run artifact bundle | `quality.json`, `variance.json` or `control.json`, selected search hits, `calculation.json`, `draft.json`, `finding.json`, `gates.json`, plus existing `run.json` and `events.jsonl` | The same run can be reconstructed without parsing model prose |
-| 2 — next | Read-only HTML review board that opens in Codex | The per-run bundle from pass 1 | Every amount and evidence edge is clickable; live and replay use the same layout |
+The browser only renders curated JSON. Python validates the source package, performs the finance
+calculations, and reads saved artifacts. The server serves only its static files and `/api/state`,
+binds to `127.0.0.1`, and has no route to start an agent, record feedback, approve, or post.
 
-The current code saves `run.json`, raw events, a SQLite record, and text-style Markdown/HTML. It
-does **not** yet persist a standalone quality report, full search hits, or draft lines per run.
-Those are the first output changes to make. They should have typed schemas and replay tests before
-the visual board reads them.
+Historical guidance is visibly distinct from current support. Every view carries a synthetic-data
+label. Drafts remain `UNPOSTED`, and the human decision remains `PENDING`. When Codex subscription
+usage provides tokens but no dollar cost, the site says “not reported” rather than estimating it.
 
-## Design rules
+## Next provenance pass
 
-1. Keep `SYNTHETIC DATA` visible in every view and export.
-2. Show data admission before the agent timeline. A failed blocking check is the primary result.
-3. Mark guidance, current evidence, canonical policy, and calculated values as distinct source
-   types; never draw a prior-year page as the proof edge for a current-period claim.
-4. Use source IDs and content hashes to open the exact record. Do not invent a friendly summary
-   that loses lineage.
-5. Show `PENDING` and `UNPOSTED` plainly. A draft is an item for review, not an executed entry.
-6. Show token usage and elapsed time when returned. Display “cost not reported” for the Codex
-   subscription runtime instead of estimating a dollar amount.
-7. Keep the timeline concise: tool name, input IDs, output IDs, duration, and gate result. Do not
-   expose private reasoning text.
-8. Make the receipt trend and its four threshold checks visible together, so the preventive
-   escalation can be understood without a model narrative.
+This is an effective presentation view, not a complete run-reconstruction bundle. The current
+source-preview panels recompute from the validated current package; they are not frozen copies of
+each past run. `run.json`, JSONL events, and the ledger are saved, but a standalone `quality.json`,
+exact selected search hits, calculation, and draft lines are not persisted together per run. The
+trace also does not currently capture per-tool duration.
 
-## Acceptance check
+Before treating the site as an audit view across changing packages, persist typed stage artifacts
+with package and policy versions. Then link each monetary claim to the exact source record,
+content hash, calculation, and gate that supported that run. A blocked receipt case should also
+save a run record, as the annual case already does. Freeze regression tests for those contracts
+before changing the UI.
 
-Open one successful live annual run, one replay annual run, the receipt escalation, and a blocked
-data-quality case. A reviewer should be able to answer: **What happened? Which current records
-prove it? What did code calculate? Which gate allowed or stopped it? What must a human do next?**
-No visual component should change the `Finding`, `DraftAdjustment`, or route.
+## Acceptance and demo use
 
-After the local review board works, a presentation Site could read the same exported bundle. Site
-work is a separate implementation step; this plan does not make the Site a dependency for running
-the demo.
+Open a successful live annual run, a replay run, the receipt escalation, and a blocked-data
+fixture. A reviewer should be able to answer: What happened? Which current records support it?
+What did code calculate? Which gate allowed or stopped it? What must a human do next? The local
+site covers the presentation path today; the provenance pass above makes it durable across
+future data versions. No visual component may change a `Finding`, `DraftAdjustment`, or route.
+
+Hosting a separate presentation Site is optional and is not needed for the Codex demo.

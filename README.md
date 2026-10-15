@@ -38,6 +38,14 @@ make verify
 make demo-1
 ```
 
+In a separate terminal, run `make site` to serve the read-only review experience at
+[http://127.0.0.1:4173/](http://127.0.0.1:4173/).
+Open that address in Codex desktop's browser. It shows package admission, both finance cases,
+saved runs, tool calls, governance gates, and SME feedback. The site uses only local synthetic
+data and does not start an agent, approve a draft, or post an entry. It works without an API key;
+new runs appear after a refresh. Do not open `src/financial_controller/site/static/index.html`
+directly: that is only the HTML shell and cannot load the local finance API without `make site`.
+
 No API key is required for the default live path. `make demo-1` invokes `codex exec`, which reuses
 the local Codex ChatGPT sign-in. Confirm it with:
 
@@ -78,13 +86,15 @@ becomes a final-close failure without inventing a root cause.
 - `knowledge/`: synthetic runbooks and prior investigations.
 - `domain_skills/`: finance SME playbooks; direct live-agent loading is planned.
 - `src/financial_controller/`: validation, finance engine, retrieval, agent, gates, reporting.
+- `src/financial_controller/site/`: local, read-only visual review of source data and saved runs.
 - `evals/`: frozen behavioral cases and replay fixtures.
 - `.agents/skills/`: repo-local Codex development workflows.
 
 Start with [how we built it](docs/ai-dlc/README.md), the [build plan](docs/ai-dlc/build-plan.md),
 and the [visual process design](docs/process-design.md). For implementation details, see
 [architecture](docs/architecture.md); for commands, see [how to run the demo](docs/run-the-demo.md).
-The [visualization plan](docs/visualization-plan.md) describes the next read-only review screen.
+The [visualization plan](docs/visualization-plan.md) describes the current local screen and its
+remaining provenance improvements.
 
 ## Safety boundary
 
