@@ -5,9 +5,13 @@ login; the replay path runs without a model call.
 
 ## Open with the problem, not the command
 
-Ask the room: “We booked USD 144,000 of software expense against a USD 12,000 monthly budget.
-Is that overspending, a timing issue, or bad data?” Then use the demo to answer these questions
-in order:
+Ask the room: “At month-end, we have variances, reconciliation breaks, and aging items. How do
+we know which are data issues, which we can resolve with evidence, and which need escalation
+before close?”
+
+Then give one example: September software expense is USD 144,000 against a USD 12,000 monthly
+budget. Is it genuine overspending, an annual bill recorded in one month, or a source-data issue?
+Use the demo to answer the follow-up questions in order:
 
 | Ask | Reveal |
 |---|---|
@@ -21,6 +25,7 @@ in order:
 The [process design](process-design.md) has the question-led diagram and source-by-source path.
 Keep the first view simple; open the detailed tool trace only when answering how the result was
 reached.
+
 The missing-contract example is a replay eval, not a second live investigation; use it to discuss
 the failure boundary without presenting it as an end-to-end live path.
 

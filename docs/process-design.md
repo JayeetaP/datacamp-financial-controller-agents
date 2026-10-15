@@ -4,21 +4,28 @@ This page starts with the controller's questions, then reveals the system only a
 needs an answer. Everything is synthetic. The diagrams are Mermaid blocks that render in GitHub
 Markdown.
 
-## Start the discussion with these questions
+## Start with the finance question
 
-1. September shows USD 144,000 in software expense against a USD 12,000 budget. Is this a real
-   overspend, a timing issue, or bad data?
-2. What must pass before we let an agent investigate: file completeness, required columns,
+> At month-end, we have variances, reconciliation breaks, and aging items. How do we know which
+> are data issues, which we can resolve with evidence, and which need escalation before close?
+
+Use one example to make that concrete: September software expense is USD 144,000 against a USD
+12,000 monthly budget. Is it genuine overspending, an annual bill recorded in one month, or a
+problem in the source data?
+
+Then work through the questions the controller would ask:
+
+1. What must pass before we let an agent investigate: file completeness, required columns,
    relationships, and reconciliations? What happens when a check fails?
-3. If an older case suggests the answer, what would still count as proof for **this** September?
-4. If the current evidence supports a correction, what can code calculate and prepare—and what
+2. If an older case suggests the answer, what would still count as proof for **this** September?
+3. If the current evidence supports a correction, what can code calculate and prepare—and what
    must remain a controller's decision?
-5. What if there is no supported answer, or a different control is getting worse before close?
-6. How can we see what the agent used, how long it took, and whether the next version is better?
+4. What if there is no supported answer, or a different control is getting worse before close?
+5. How can we see what the agent used, how long it took, and whether the next version is better?
 
-The first four questions lead through the annual-software case. The fifth introduces the
-unmatched-receipt case: an early escalation, not a second AI-generated diagnosis. The last
-question connects both cases to run history, SME feedback, and eval-led improvement.
+The example and first three follow-ups lead through the annual-software case. The fourth
+introduces unmatched receipts: an early escalation, not a second AI-generated diagnosis. The
+last connects both cases to run history, SME feedback, and eval-led improvement.
 
 ## The flow in one view
 
